@@ -1,0 +1,7 @@
+name: inference-feature-selection-train
+dependencies:
+  - python=3.10
+  - scikit-learn
+  - pip
+  - pip:
+      - mlflow

@@ -1,0 +1,26 @@
+$schema: https://azuremlschemas.azureedge.net/latest/pipelineJob.schema.json
+type: pipeline
+
+inputs:
+  dataset_input:
+    type: uri_file
+    path: wasbs://datasets@azuremlexamples.blob.core.windows.net/iris.csv
+
+settings:
+  default_compute: azureml:cpu-cluster
+
+jobs:
+
+  train:
+    name: train
+    display_name: Train
+    code: ../src/
+    command: >-
+      python train.py
+      --output_path ${{outputs.output_model}}
+    environment: azureml:inference-feature-selection-train@latest
+    inputs:
+      dataset_input: ${{parent.inputs.dataset_input}}
+    outputs:
+      output_model: 
+        type: custom_model
