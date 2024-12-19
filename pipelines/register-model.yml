@@ -1,0 +1,21 @@
+$schema: https://azuremlschemas.azureedge.net/latest/pipelineJob.schema.json
+type: pipeline
+experiment_name: register_model_with_component
+
+inputs:
+  model_input:
+    type: uri_folder
+    path: azureml://datastores/workspaceblobstore/paths/azureml/e3eaebdc-a8c4-48c1-b1e8-2d01d0c3a628/output_model
+
+settings:
+  default_compute: azureml:cpu-cluster
+
+jobs:
+
+  register:
+    type: command
+    component: azureml:register_model@latest
+    inputs:
+      model_input: ${{parent.inputs.model_input}}
+      model_name: iris_model_demo
+      pipeline_steps_to_exclude: select

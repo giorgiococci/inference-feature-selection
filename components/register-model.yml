@@ -1,0 +1,24 @@
+$schema: https://azuremlschemas.azureedge.net/latest/commandComponent.schema.json
+name: register_model
+display_name: register_model
+description: Register Model
+tags:
+  author: SRACE-MLOps
+type: command
+inputs:
+  model_input: 
+    type: uri_folder
+  model_name:
+    type: string
+    default: iris_model
+  pipeline_steps_to_exclude:
+    type: string
+    default: select
+    optional: true
+code: ../src/register_src
+environment: azureml://registries/azureml/environments/sklearn-1.5/versions/17
+command: >-
+  python register.py
+  --model_path ${{inputs.model_input}}
+  --model_name ${{inputs.model_name}}
+  $[[--pipeline_steps_to_exclude ${{inputs.pipeline_steps_to_exclude}}]]
