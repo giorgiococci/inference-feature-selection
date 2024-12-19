@@ -4,4 +4,5 @@ dependencies:
   - scikit-learn
   - pip
   - pip:
+      - azureml-mlflow
       - mlflow
